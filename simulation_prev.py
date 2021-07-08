@@ -13,7 +13,7 @@ def tailleopt(p):
     return int((1.59)/(-np.log(1-p))+0.5)
 
 ##calcul de la somme des X_i^{(N)} (v.a de Bernoulli)
-def somme(prev,taille,n): #taille=taille du pool (N)
+def somme(prev,taille,n): #taille=taille du pool (N), n=nb de tests
     liste=[]
     S=0
     for i in range(n):
@@ -24,7 +24,7 @@ def somme(prev,taille,n): #taille=taille du pool (N)
 
 ##calcul de l'estimateur
 def calculesti(prev,taille,n):
-    esti=1-((1/n)*somme(prev,taille,n))**(1/taille) #formule de l'estimateur
+    esti=1-((1/n)*somme(prev,taille,n))**(1/taille) #formule de l'estimateur avec la moyenne empirique
     return esti
 
 ##intervalle de confiance
@@ -174,6 +174,3 @@ plt.ylim(0,0.8)
 legend()
 
 show()
-
-
-
