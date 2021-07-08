@@ -1,8 +1,7 @@
 from math import *
 from matplotlib.pyplot import plot, show, legend
 
-
-def fonction(p, n):
+def fonction(p, n): 
     x = np.arange(1, n)
     y = (2*(1-p)/(x*0.005)*np.sqrt((1-(1-p)**x)/(1-p)**x))**2
     yp = x*y
