@@ -6,19 +6,14 @@ from matplotlib.pyplot import plot, show, legend
 import numpy as np
 import matplotlib.pyplot as plt
 
-
 ##taille de pool optimale déterminée par Thompson
 def tailleopt(p):
     if p==0.0:
         return 0
     return int((1.59)/(-np.log(1-p))+0.5)
 
-p=0.1     #prévalence réelle
-p0=0.5    #premier estimateur #nombre de pools
-N0=tailleopt(p0)
-
 ##calcul de la somme des X_i^{(N)} (v.a de Bernoulli)
-def somme(prev,taille,n): #taille=taille optimale associée à prev
+def somme(prev,taille,n): #taille=taille du pool (N)
     liste=[]
     S=0
     for i in range(n):
@@ -32,41 +27,18 @@ def calculesti(prev,taille,n):
     esti=1-((1/n)*somme(prev,taille,n))**(1/taille) #formule de l'estimateur
     return esti
 
-##calcul de l'estimateur moyen après plusieurs simulations
-def moyenne(a,prev,taille,n):  #a=nombre de simulations que l'on effectue
-    valeurs=[]
-    for i in range (a):
-        valeurs.append(calculesti(prev,taille,n))
-    #print (valeurs)
-    return mean(valeurs)
-
-
-def iter(prev,taille,n):
-    iter=0
-    while abs(prev-p)>0.05: #tant que l'estimateur n'est pas assez proche de p, on recommence
-        prev=moyenne(1000,prev,taille,n)
-        taille=tailleopt(prev)
-        iter=iter+1
-        #print(prev)
-    return (prev,taille, iter)
-#iter(p0,N0)
-#estim,taille,iter=iter(p0,N0,n)
-#print('Pour n=',n,'et p0=',p0,'le meilleur estimateur de p=',p,' est p^=',estim,'et la taille de pool optimale correspondante est N_opt=',taille,'\n-----------------','\n','cela nécessite',iter,'itération(s)')
-
-
 ##intervalle de confiance
-def infconf(prev,taille,n):
+def infconf(prev,taille,n): #borne inf
     if prev==0.0:
         return 0
     S=somme(prev,taille,n)
     a=prev-(1.96*((1/n)*S)**(1/taille -1)*np.sqrt((1-(1/n)*S)*(1/n)*S))/(taille*np.sqrt(n))
     return a
 
-def supconf(prev,taille,n):
+def supconf(prev,taille,n): #borne sup
     S=somme(prev,taille,n)
     b=prev+(1.96*((1/n)*S)**(1/taille -1)*np.sqrt((1-(1/n)*S)*(1/n)*S))/(taille*np.sqrt(n))
     return b
-
 
 
 ##estimateurs initiaux p°
@@ -97,7 +69,6 @@ for j in range(1,100):
     plt.scatter(estim_ini,estim_iter, c='black')
     for i in range (len(L)):
         L[i].append(estim_iter[i])
-
 M=[]
 for i in range (0,len(L)):
     M.append(np.percentile(L[i],50))
@@ -129,7 +100,6 @@ plt.ylabel('estimateur après la \n première itération $(p^1)$')
 plt.title('$n=20$, 100 simulations')
 plt.ylim(0,0.8)
 legend()
-
 
 plt.subplot(222)
 plot(estim_ini,inf, color='r', label='intervalle de confiance de $p*$')
@@ -172,8 +142,6 @@ for i in range (0,len(L1)):
 C1=[]
 for i in range (0,len(L1)):
     C1.append(np.percentile(L1[i],97.5))
-
-
 
 plot(estim_ini,PQ1,'.-', label='premier quartile pour chaque $p^0$ \n après 100 simulations')
 
