@@ -1,16 +1,16 @@
 from math import *
 from matplotlib.pyplot import plot, show, legend
 
-def fonction(p, n): 
-    x = np.arange(1, n)
-    y = (2*(1-p)/(x*0.005)*np.sqrt((1-(1-p)**x)/(1-p)**x))**2
-    yp = x*y
-    return(x, y, yp)
+def nombre(p, k): #n comme fonction de N et p
+    N = np.arange(1, k)
+    nbtests = (2*(1-p)/(N*0.005)*np.sqrt((1-(1-p)**N)/(1-p)**N))**2
+    nbtot = N*nbtests
+    return(N, nbtests, nbtot)
 
-x, y, yp = fonction(p=0.01, n=600)
-x1, y1, y1p = fonction(p=0.03, n=175)
-x2, y2, y2p = fonction(p=0.05, n=100)
-x3, y3, y3p = fonction(p=0.15, n=25)
+x, y, yp = nombre(p=0.01, k=600)
+x1, y1, y1p = nombre(p=0.03, k=175)
+x2, y2, y2p = nombre(p=0.05, k=100)
+x3, y3, y3p = nombre(p=0.15, k=25)
 
 fig = plt.figure(figsize=(16,16))
 fig.subplots_adjust(hspace=0.4, wspace=0.4)
