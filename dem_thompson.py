@@ -249,3 +249,4 @@ plt.ylabel('Différence entre risque quadratique  \n et variance asymptotique')
 legend()
 plt.title('$n=100$')
 show()
+ 
