@@ -38,7 +38,7 @@ axe22_X.set_ylabel('Y1p data', color='b')
 plt.title('$p=3\%$')
 
 #fig 3
-i = 3
+i = 3 
 axe31_X = fig.add_subplot(2, 2, i)
 axe32_X = axe31_X.twinx()
 axe31_X.plot(x2, y2, 'r-')
