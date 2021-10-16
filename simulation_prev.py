@@ -173,4 +173,4 @@ plt.title('$n=1000$, 1 simulation')
 plt.ylim(0,0.8)
 legend()
 
-show()
+show() 
